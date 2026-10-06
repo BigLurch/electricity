@@ -27,3 +27,15 @@ jobs:
       - uses: astral-sh/setup-uv@v6
       - run: uv sync --frozen
       - run: uv run pytest
+
+  artifact:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create result file
+        run: echo "Test passed successfully" > result.txt
+      - name: Upload result artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-result
+          path: result.txt
